@@ -74,7 +74,8 @@ haeg='javascript;void(0);' onclick' todosqlite. webdb.deleteTodo(" + row.ID
 
 </script>
                 </head>               
-               <body> 
+               <body onload="init();">
+<ul id="todoIrems"><ul/> 
                           <form type="podt" onsubmit="addTodo(); return false;">
                          <input type="text" id="todo" name="todo" placeholder="내용을 입력해주세요."
 style="width: 200px;"/>

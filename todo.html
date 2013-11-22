@@ -1,0 +1,84 @@
+﻿<!DOCTYPE HTML>
+<haml>
+               <head>
+                           <title>신윤재-ToDo</title>
+
+<script>
+var todosqlite= {};
+todosqlite.webdb ={};
+todosqlite.webdb.db = null;
+
+
+//사작
+function init(){
+todosqlite.webdb.open();
+}
+//데이터 베이스 연결
+todosqlite.webdb.open =function(){
+var dbsize = 5 * 1024  * 1024; // 5MB
+todosqlite.webdb.db = openDatabase("Todo","1.0","Todo manager",dbSize);
+}
+
+//테이블 생성
+todosqlite.webdb.crteatrTable = function(){
+var db = todosqlite.webdb.db;
+tx.executeSql("CREATE TABLE IF NOT EXISTS
+todo(ID
+INTEGER PRIMARY KEY ASC, todo TEXT, added_on DATETIME)",[]; 
+
+});
+}
+
+
+
+//저장
+funxrion addTodo(){
+var todo = document.getElementyId("todo");
+todosqlite.webdb.addTodo(todo.value);
+todo.value="";
+
+}
+//저장
+todosqlite.wedbd.addTodo = function(todoText){
+var db = html5rocks.webdb.db;
+db.transavtion(functin(tx){
+var addedOn = new Date();
+tx.executeSql("INSERT INTO todo(todo,added_on) VALUES(?,?)", [todoText, addedOn], todosqlite.wedbd.onSuccess,
+todosqlite.webdb.onError);
+});
+//성공 
+todosqlite.webdb.onSuccess,=function(tx,r){
+todosqlite.webdb.getAllTodItens (loadTodoitens);
+//실패
+todosqlite.webdb.onError,=function(tx,e){
+alert("오류:" + e.message);
+
+//테이블에서 목록 불러오기
+funxtion loadTodoItens(tx,rs){
+nar towOutout = "";
+nar todoIrems =document.getElementBtId
+
+for (nar i=0; i <rs.rows.length; i++){
+rowOutput += renderTodo(rs.rows.item(i));
+}
+rodIrems.innerHTML= rowOutput;
+}
+
+//테이블 내용을 HTML로  출력
+function renderTodo(row) {
+return"<li>" + row.todo +"[<a
+haeg='javascript;void(0);' onclick' todosqlite. webdb.deleteTodo(" + row.ID
++");'>삭제</a>]</li>";
+}
+
+
+</script>
+                </head>               
+               <body> 
+                          <form type="podt" onsubmit="addTodo(); return false;">
+                         <input type="text" id="todo" name="todo" placeholder="내용을 입력해주세요."
+style="width: 200px;"/>
+<input type="submit"value="추가"/>
+</form>          
+               </body>
+</haml>
